@@ -24,7 +24,7 @@ public class DataAccess implements IBlockAccess<PlayerBlockData, String> {
     }
 
     public boolean saveAll(List<PlayerBlockData> data) throws Exception{
-        String sql_update = "UPDATE Blocks SET Blocks.Blocks = ? WHERE Blocks.UUID = ?;";
+        String sql_update = "UPDATE Blocks SET Blocks = ? WHERE UUID = ?;";
         try(Connection conn = connector.getConnection();
             PreparedStatement stmt_update = conn.prepareStatement(sql_update)) {
 
@@ -43,7 +43,7 @@ public class DataAccess implements IBlockAccess<PlayerBlockData, String> {
     public boolean save(PlayerBlockData data) throws Exception{
         if (!data.isDirty()) return true;
         String sql_playerCID = "SELECT ID FROM Blocks WHERE UUID = ?;";
-        String sql_update = "UPDATE Blocks SET Blocks.Blocks = ? WHERE Blocks.ID = ?;";
+        String sql_update = "UPDATE Blocks SET Blocks = ? WHERE ID = ?;";
         try(Connection conn = connector.getConnection();
         PreparedStatement stmt_CID = conn.prepareStatement(sql_playerCID);
         PreparedStatement stmt_update = conn.prepareStatement(sql_update)){
@@ -76,7 +76,7 @@ public class DataAccess implements IBlockAccess<PlayerBlockData, String> {
     }
 
     public PlayerBlockData get(String uuid) throws Exception{
-        String sql_blocks = "SELECT Blocks.Blocks FROM Blocks WHERE UUID = ?;";
+        String sql_blocks = "SELECT Blocks FROM Blocks WHERE UUID = ?;";
 
         try(Connection conn = connector.getConnection();
         PreparedStatement stmt_blocks = conn.prepareStatement(sql_blocks)){
@@ -93,22 +93,6 @@ public class DataAccess implements IBlockAccess<PlayerBlockData, String> {
 
     @Override
     public List<PlayerBlockData> getAll(List<String> param) throws Exception {
-//        List<PlayerBlockData> data = new ArrayList<>();
-//        String sql = "SELECT Blocks.Blocks, Blocks.UUID FROM Blocks WHERE UUID = ?;";
-//        try(Connection conn = connector.getConnection();
-//            PreparedStatement stmt_get = conn.prepareStatement(sql)){
-//
-//            for (String s : param){
-//                stmt_get.setString(1, s);
-//
-//                try (ResultSet rs = stmt_get.executeQuery()) {
-//                    while (rs.next()) {
-//                        data.add(new PlayerBlockData(rs.getString(2), rs.getInt(1)));
-//                    }
-//                }
-//            }
-//        }
-//        return data;
         List<PlayerBlockData> data = new ArrayList<>();
 
         String placeholders = String.join(",", Collections.nCopies(param.size(), "?"));
