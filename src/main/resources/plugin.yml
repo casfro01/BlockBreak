@@ -1,0 +1,25 @@
+name: BlockBreak
+version: '1.0-mc-1.20.6'
+main: dk.casfro01.blockBreak.BlockBreak
+api-version: '1.20.6'
+authors: [cfj1211]
+loadbefore: []
+libraries:
+  - org.xerial:sqlite-jdbc:3.47.1.0
+commands:
+  blocks:
+    aliases:
+      - b
+    description: Viser blocks minet.
+    permission: blocks.block
+    permission-message: Du har ikke adgang til denne block kommando.
+  blockAdmin:
+    aliases:
+      - BlockAdmin
+      - BlocksAdmin
+      - ba
+      - blockA
+      - blocksA
+    description: Henter alle block admin kommandoer.
+    permission: blocks.admin
+    permission-message: Du har ikke adgang til denne admin kommando.

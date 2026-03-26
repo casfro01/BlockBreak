@@ -1,0 +1,21 @@
+#Den primære farve som bruges
+PrimaryColor: '&9'
+
+#Den sekundære farve som bruges
+SecondaryColor: '&7'
+
+#Den farve som fejl har
+ErrorColor: '&4'
+
+#Den farve som success har
+SuccessColor: '&a'
+
+#Det prefix som skal stå foran alle beskeder relateret til dette
+Prefix: '&8&l[&1Block Break&8&l]&r '
+
+#Det prefix som skal stå foran alle beskeder relateret til dette
+AdminCommandsPrefix: '&8&l[&cAdmin Block Break&8&l]&r '
+
+#Den besked som skal vises for alm. spillere, hvis de ikke kan udføre kommandoen
+PermissionMessage: '&cDu har ikke adgang til denne kommando.'
+
