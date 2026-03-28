@@ -7,6 +7,7 @@ import dk.casfro01.blockBreak.Commands.Registry.CommandAdminRegistry;
 import dk.casfro01.blockBreak.Commands.Registry.CommandRegistry;
 import dk.casfro01.blockBreak.Commands.Registry.IRegistry;
 import dk.casfro01.blockBreak.Commands.User.InfoBlocksCommand;
+import dk.casfro01.blockBreak.Commands.User.TopBlocksCommand;
 import dk.casfro01.blockBreak.Commands.User.UserCommandExecutor;
 import dk.casfro01.blockBreak.Configs.StyleConfig;
 import dk.casfro01.blockBreak.Configs.Config;
@@ -50,6 +51,7 @@ public final class BlockBreak extends JavaPlugin {
         IRegistry<ICommand> adminCommands = CommandAdminRegistry.getInstance();
 
         Commands.registerCommand(new InfoBlocksCommand());
+        Commands.registerCommand(new TopBlocksCommand());
 
         adminCommands.registerCommand(new AdminHelpCommand());
 

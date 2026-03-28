@@ -2,6 +2,7 @@ package dk.casfro01.blockBreak.DataAccess;
 
 import dk.casfro01.blockBreak.BlockBreak;
 import dk.casfro01.blockBreak.Models.PlayerBlockData;
+import dk.casfro01.blockBreak.Models.TopPlayerBlockData;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -14,13 +15,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DataAccess implements IBlockAccess<PlayerBlockData, String> {
+public class DataAccess implements IBlockAccess<PlayerBlockData, String>, ITop<TopPlayerBlockData>{
     private DBConnector connector;
 
     // dbpath -> relative
-    public DataAccess(BlockBreak plugin, String dbPath) throws Exception {
+    public DataAccess(BlockBreak plugin, String dbPath, boolean runStart) throws Exception {
         this.connector = new DBConnector("jdbc:sqlite:" + plugin.getDataFolder().getAbsolutePath() + dbPath);
-        runDBScript();
+        if (runStart) runDBScript();
     }
 
     public boolean saveAll(List<PlayerBlockData> data) throws Exception{
@@ -143,5 +144,28 @@ public class DataAccess implements IBlockAccess<PlayerBlockData, String> {
             }
 
         }
+    }
+
+    @Override
+    public List<TopPlayerBlockData> getTopTen(int page) throws Exception{
+        String sql = """
+                SELECT UUID, Blocks
+                FROM Blocks
+                ORDER BY Blocks DESC
+                LIMIT 10 OFFSET ?;
+                """;
+        List<TopPlayerBlockData> lst = new ArrayList<>();
+        try (Connection conn = connector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, (page - 1) * 10);
+            ResultSet rs = stmt.executeQuery();
+            int i = (page - 1) * 10;
+            while (rs.next()){
+                i++;
+                lst.add(new TopPlayerBlockData(rs.getString(1), rs.getInt(2), i));
+            }
+        }
+        return lst;
     }
 }

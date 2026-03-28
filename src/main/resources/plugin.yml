@@ -10,6 +10,7 @@ commands:
   blocks:
     aliases:
       - b
+      - block
     description: Viser blocks minet.
     permission: blocks.block
     permission-message: Du har ikke adgang til denne block kommando.

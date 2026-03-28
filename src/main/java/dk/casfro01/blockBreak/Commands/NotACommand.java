@@ -6,7 +6,7 @@ public class NotACommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        sendPlayerMessage(getStyle().getErrorColor() + "Ikke en valid kommando, brug" + getStyle().getPrimaryColor() + " /template help" + getStyle().getErrorColor() + " for mere hjælp.");
+        sendPlayerMessage(getStyle().getErrorColor() + "Ikke en valid kommando, brug" + getStyle().getPrimaryColor() + " /blocks help" + getStyle().getErrorColor() + " for mere hjælp.");
 
     }
 

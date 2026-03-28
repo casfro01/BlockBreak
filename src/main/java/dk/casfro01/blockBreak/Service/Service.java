@@ -3,15 +3,20 @@ package dk.casfro01.blockBreak.Service;
 import dk.casfro01.blockBreak.DataAccess.DataAccess;
 import dk.casfro01.blockBreak.BlockBreak;
 import dk.casfro01.blockBreak.DataAccess.IBlockAccess;
+import dk.casfro01.blockBreak.DataAccess.ITop;
 import dk.casfro01.blockBreak.Models.PlayerBlockData;
+import dk.casfro01.blockBreak.Models.TopPlayerBlockData;
 import dk.casfro01.blockBreak.Options.ConfigOptions;
 import dk.casfro01.blockBreak.Util.Logger;
 import dk.casfro01.blockBreak.Util.PlayerDataCache;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Service {
     private IBlockAccess<PlayerBlockData, String> dataAccess;
@@ -19,6 +24,7 @@ public class Service {
     private PlayerDataCache cache;
     private Logger logger;
     private final BlockBreak plugin;
+    private Map<String, Boolean> commandCache = new HashMap<>();
 
     public Service(BlockBreak plugin, String dbpath, ConfigOptions config){
         this.cache = new PlayerDataCache();
@@ -26,7 +32,7 @@ public class Service {
         this.logger = new Logger(plugin);
         this.plugin = plugin;
         try {
-            this.dataAccess = new DataAccess(plugin, dbpath);
+            this.dataAccess = new DataAccess(plugin, dbpath, !new File(plugin.getDataFolder().getAbsolutePath() + dbpath).exists());
 
         } catch (Exception e) {
             logger.printToLog(e.getMessage() + " [DEBUG: service constructor]");
@@ -92,5 +98,26 @@ public class Service {
                 logger.printToLog("FAILED TO LOAD PLAYERS BECAUSE : " + e.getMessage() + " [DEBUG: loadCurrentPlayers]");
             }
         });
+    }
+
+    public List<TopPlayerBlockData> getTopBlocks(int page){
+        try {
+            if (dataAccess instanceof DataAccess d){
+                return d.getTopTen(page);
+            }
+        } catch (Exception e) {
+            logger.printToLog("FAILED TO FETCH TOP BECAUSE : " + e.getMessage() + " -> DEBUG: getTopBlocks::" + page);
+        }
+        return null;
+    }
+
+    public void addExecuting(String string) {
+        commandCache.put(string, false);
+    }
+    public boolean canExecute(String string){
+        return commandCache.getOrDefault(string, true);
+    }
+    public void removeExecuting(String string){
+        commandCache.remove(string);
     }
 }
