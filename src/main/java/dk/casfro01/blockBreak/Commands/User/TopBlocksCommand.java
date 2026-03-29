@@ -39,7 +39,6 @@ public class TopBlocksCommand extends AbstractCommand implements CommandWithServ
             Bukkit.getScheduler().runTask(bb, () ->{
                 if (lst.isEmpty()){
                     sendPlayerMessage(getStyle().getPrimaryColor() + "Ingen data her.");
-                    return;
                 }
                 for (TopPlayerBlockData tp : lst) {
                     sendPlayerMessage(getStyle().getPrimaryColor() + "#" + tp.getPlace() + getStyle().getSecondaryColor() + " " + Bukkit.getOfflinePlayer(UUID.fromString(tp.getUuid())).getName() + " Blocks: " + tp.getBlocks());

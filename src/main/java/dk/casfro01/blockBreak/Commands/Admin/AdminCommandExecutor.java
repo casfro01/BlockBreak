@@ -14,7 +14,7 @@ public class AdminCommandExecutor implements org.bukkit.command.CommandExecutor{
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (!commandSender.hasPermission("template.admin")){
+        if (!commandSender.hasPermission("blocks.admin")){
             commandSender.sendMessage(ChatColor.RED + "Du har ikke adgang til admin systemet.");
             return false;
         }

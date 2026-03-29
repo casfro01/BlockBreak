@@ -11,7 +11,7 @@ public class PlayerDataCache {
     private Map<String, PlayerBlockData> cache = new HashMap<>();
 
     public PlayerBlockData get(String uuid){
-        return cache.get(uuid);
+        return cache.getOrDefault(uuid, null);
     }
 
     public List<PlayerBlockData> getList(){

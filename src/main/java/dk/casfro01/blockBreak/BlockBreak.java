@@ -54,6 +54,7 @@ public final class BlockBreak extends JavaPlugin {
         Commands.registerCommand(new TopBlocksCommand());
 
         adminCommands.registerCommand(new AdminHelpCommand());
+        adminCommands.registerCommand(new AdminAddBlocksCommand());
 
         // base commands
         getCommand("blocks").setExecutor(new UserCommandExecutor());

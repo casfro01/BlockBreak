@@ -11,7 +11,7 @@ public class AdminHelpCommand extends AbstractCommand {
         StyleOptions options = getStyle();
         sendAdminPlayerMessage(options.getPrimaryColor() + "Admin Kommandoer:");
         sendPlayerMessage(getDescription(), false);
-        // Loop? el. andet
+        sendAdminPlayerMessage("Denne kommand er ikke lavet endnu");
     }
 
     @Override
@@ -21,7 +21,7 @@ public class AdminHelpCommand extends AbstractCommand {
 
     @Override
     public String getDescription() {
-        return getStyle().getPrimaryColor() + "/command2 help " + getStyle().getSecondaryColor() + "Viser dig en liste over tilgængelige kommandoer.";
+        return getStyle().getPrimaryColor() + "/blocksAdmin help " + getStyle().getSecondaryColor() + "Viser dig en liste over tilgængelige kommandoer.";
     }
 
     @Override

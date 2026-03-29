@@ -120,4 +120,25 @@ public class Service {
     public void removeExecuting(String string){
         commandCache.remove(string);
     }
+
+    public void addBlocks(String string, int amount) {
+        PlayerBlockData res = cache.get(string);
+        if (res == null){
+            try {
+                res = dataAccess.get(string);
+                res = new PlayerBlockData(res.getUuid(), res.getBlocks() + amount - 1);
+                res.incrementBlocks();
+                dataAccess.save(res);
+                logger.printToLog("ADDED " + amount + " To Player UUID " + string);
+            } catch (Exception e) {
+                logger.printToLog("FAILED ADD BLOCKS BECAUSE : " + e.getMessage() + " -> DEBUG: addBlocks");
+            }
+        }
+        else{
+            res = new PlayerBlockData(res.getUuid(), res.getBlocks() + amount - 1);
+            res.incrementBlocks();
+            cache.addPlayer(res.getUuid(), res);
+            logger.printToLog("ADDED " + amount + " To Player UUID " + string);
+        }
+    }
 }
