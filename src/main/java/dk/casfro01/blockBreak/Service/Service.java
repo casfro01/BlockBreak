@@ -40,7 +40,7 @@ public class Service {
 
 
         // start regelmæssige saves af spillerdata
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::saveAllCachedPlayerData, 20L * 300, 20L * 300);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> saveAllCachedPlayerData(), 20L * 300, 20L * 300);
     }
 
     public PlayerBlockData getData(String uuid){
@@ -75,13 +75,24 @@ public class Service {
     }
 
     public void saveAllCachedPlayerData(){
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+        saveAllCachedPlayerData(true);
+    }
+    public void saveAllCachedPlayerData(boolean async){
+        if (async) Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
                 dataAccess.saveAll(cache.getList());
             } catch (Exception e) {
                 logger.printToLog("FAILED TO SAVE ALLE CACHED DATA BECAUSE: " + e.getMessage() + " [DEBUG: saveAllCachedPlayerData]");
             }
         });
+        // Quick løsning
+        else{
+            try {
+                dataAccess.saveAll(cache.getList());
+            } catch (Exception e) {
+                logger.printToLog("FAILED TO SAVE ALLE CACHED DATA BECAUSE: " + e.getMessage() + " [DEBUG: saveAllCachedPlayerData]");
+            }
+        }
     }
 
     public void incrementBlock(String uuid){

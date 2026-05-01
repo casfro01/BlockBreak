@@ -71,7 +71,7 @@ public final class BlockBreak extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        service.saveAllCachedPlayerData();
+        service.saveAllCachedPlayerData(false);
         // Plugin shutdown logic
         System.out.println("[BlockBreak] Shutting down, good bye.");
     }
